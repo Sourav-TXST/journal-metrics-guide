@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Where journal metrics come from</title>
+<style>
+body{margin:0;background:#fff;font-family:"Noto Sans Bengali","Noto Sans",Arial,sans-serif;color:#2C2C2A}
+.wrap{padding:32px 36px;width:1040px}
+h1{font-size:26px;font-weight:600;margin:0 0 4px}
+.sub{font-size:15px;color:#5F5E5A;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(6,150px);column-gap:28px;position:relative;align-items:center}
+.hdr{font-size:14px;color:#5F5E5A;text-align:center;padding-bottom:10px;border-bottom:1px solid #D3D1C7;margin-bottom:22px;align-self:end}
+.cell{position:relative}
+.box{width:150px;height:52px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:600;box-sizing:border-box}
+.p{background:#EEEDFE;border:1.5px solid #534AB7;color:#3C3489}
+.t{background:#E1F5EE;border:1.5px solid #0F6E56;color:#085041}
+.g{background:#F1EFE8;border:1.5px solid #888780;color:#2C2C2A}
+.full{position:absolute;top:60px;left:-10px;right:-10px;font-size:14px;color:#444441;text-align:center;line-height:1.35}
+.sep{grid-column:1/-1;border-top:1.5px dashed #B4B2A9;margin:30px 0}
+.idx{border:1.5px dashed #0F6E56;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px;width:150px;box-sizing:border-box}
+.mi{border-radius:8px;padding:5px 8px;font-size:13px;line-height:1.3;background:#fff;border:1px solid #9FE1CB;color:#085041}
+.mi b{font-size:15px;display:block}
+.mi.on{background:#E1F5EE;border:1.5px solid #0F6E56}
+.idxcap{font-size:13px;color:#444441;text-align:center;margin-top:6px}
+.note{margin-top:34px;font-size:14px;color:#444441;background:#FAEEDA;border-radius:8px;padding:10px 14px;line-height:1.6}
+a.lnk{text-decoration:none;display:flex}
+a.mi{display:block}
+a.lnk:hover{filter:brightness(0.95);outline:2px solid #378ADD;outline-offset:1px}
+.scroll{overflow-x:auto;overflow-y:hidden}
+#sizer{position:relative}
+.hint{font-size:13px;color:#5F5E5A;margin:-14px 0 20px}
+h2{font-size:20px;font-weight:600;margin:34px 0 12px}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lk{display:block;border:1px solid #D3D1C7;border-radius:10px;padding:12px 14px;text-decoration:none;color:#2C2C2A}
+.lk:hover{border-color:#378ADD;background:#F6FAFE}
+.lk b{display:block;font-size:16px;color:#185FA5;margin-bottom:2px}
+.lk span{font-size:14px;color:#444441}
+.lk code{font-size:13px;color:#5F5E5A}
+
+.box,.mi,.full,.idx,.idxcap{transition:all .25s ease}
+.p{background:#EEEDFE;border:1.5px solid #7F77DD;color:#3C3489}
+.t{background:#E1F5EE;border:1.5px solid #1D9E75;color:#085041}
+.m{background:#FAEEDA;border:1.5px solid #EF9F27;color:#633806}
+.q{background:#FAECE7;border:1.5px solid #F0997B;color:#712B13}
+a.lnk{outline:none!important;filter:none!important;position:relative;cursor:pointer}
+a.box.lnk:hover,a.mi.lnk:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.14)}
+a.p.lnk:hover{background:#534AB7;border-color:#534AB7;color:#fff}
+a.t.lnk:hover{background:#0F6E56;border-color:#0F6E56;color:#fff}
+a.m.lnk:hover{background:#BA7517;border-color:#BA7517;color:#fff}
+a.q.lnk:hover{background:#D85A30;border-color:#D85A30;color:#fff}
+a.mi.lnk:hover{background:#0F6E56;border-color:#0F6E56;color:#fff}
+a.lnk[data-site]::after{content:"\2197  " attr(data-site);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) translateY(4px);background:#2C2C2A;color:#fff;font-size:12px;font-weight:400;padding:4px 8px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:all .2s;z-index:5}
+a.lnk[data-site]:hover::after{opacity:1;transform:translateX(-50%) translateY(0)}
+#grid.hl-e [data-row="c"],#grid.hl-c [data-row="e"]{opacity:.28;filter:grayscale(.6)}
+.ar{transition:stroke .25s,opacity .25s}
+.ar path.l{stroke:#888780}
+.ar path.h{fill:#888780}
+#grid.hl-e .ar.c,#grid.hl-c .ar.e{opacity:.2}
+#grid.hl-e .ar.e path.l{stroke:#534AB7;stroke-dasharray:8 5;animation:flow 0.8s linear infinite}
+#grid.hl-e .ar.e path.h{fill:#534AB7}
+#grid.hl-c .ar.c path.l{stroke:#0F6E56;stroke-dasharray:8 5;animation:flow 0.8s linear infinite}
+#grid.hl-c .ar.c path.h{fill:#0F6E56}
+@keyframes flow{to{stroke-dashoffset:-13}}
+@media (prefers-reduced-motion:reduce){.ar path.l{animation:none!important}}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#444441;margin:-10px 0 22px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.lk{border-left:5px solid #D3D1C7;transition:all .2s}
+.lk:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.1)}
+.lk.e{border-left-color:#7F77DD}.lk.e:hover{background:#F6F5FE;border-color:#534AB7}
+.lk.c{border-left-color:#1D9E75}.lk.c:hover{background:#F2FAF7;border-color:#0F6E56}
+.lk.c b{color:#0F6E56}.lk.e b{color:#534AB7}
+
+/* vivid theme */
+#els{background:#3C3489;border-color:#3C3489;color:#fff}
+#sco{background:#534AB7;border-color:#534AB7;color:#fff}
+#scim{background:#7F77DD;border-color:#7F77DD;color:#fff}
+#cla{background:#085041;border-color:#085041;color:#fff}
+#wos{background:#0F6E56;border-color:#0F6E56;color:#fff}
+#jcr{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.m{background:#FAC775;border:1.5px solid #EF9F27;color:#412402}
+.q{background:#D85A30;border:1.5px solid #D85A30;color:#fff}
+.mi{background:#fff;border:1.5px solid #5DCAA5;color:#085041}
+.mi.on{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.idx{border-color:#1D9E75;background:#E1F5EE}
+.box{box-shadow:0 2px 6px rgba(0,0,0,.08)}
+a.box.lnk:hover,a.mi.lnk:hover{transform:translateY(-4px) scale(1.04);box-shadow:0 10px 22px rgba(0,0,0,.2);filter:brightness(1.08)!important}
+a.p.lnk:hover{background:#3C3489;border-color:#26215C;color:#fff}
+a.t.lnk:hover{background:#0F6E56;border-color:#04342C;color:#fff}
+a.m.lnk:hover{background:#EF9F27;border-color:#854F0B;color:#412402}
+a.q.lnk:hover{background:#993C1D;border-color:#712B13;color:#fff}
+a.mi.lnk:hover{background:#0F6E56;border-color:#0F6E56;color:#fff}
+.ar.e path.l{stroke:#7F77DD}.ar.e path.h{fill:#7F77DD}
+.ar.c path.l{stroke:#1D9E75}.ar.c path.h{fill:#1D9E75}
+#grid.hl-e .ar.e path.l{stroke:#3C3489}#grid.hl-e .ar.e path.h{fill:#3C3489}
+#grid.hl-c .ar.c path.l{stroke:#085041}#grid.hl-c .ar.c path.h{fill:#085041}
+.ar path.l{stroke-width:2.5}
+.grid>*{position:relative;z-index:1}
+.band{position:absolute;border-radius:16px;z-index:0;transition:all .3s}
+.band.e{background:#F6F5FE;border:1px solid #CECBF6}
+.band.c{background:#F2FAF7;border:1px solid #9FE1CB}
+#grid.hl-e .band.e{background:#EEEDFE;border-color:#7F77DD}
+#grid.hl-c .band.c{background:#E1F5EE;border-color:#1D9E75}
+#grid.hl-e .band.c,#grid.hl-c .band.e{opacity:.4}
+.bandlbl{position:absolute;font-size:12px;font-weight:600;letter-spacing:.04em;padding:2px 10px;border-radius:999px;z-index:2;color:#fff}
+.bandlbl.e{background:#534AB7}.bandlbl.c{background:#0F6E56}
+@media (prefers-reduced-motion:no-preference){
+ .cell,.idx .mi{animation:pop .5s ease both}
+ @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+}
+.sep{visibility:hidden}
+.hdr{margin-bottom:44px!important}
+.note{margin-top:46px!important}
+#grid.hl-e [data-row="c"],#grid.hl-c [data-row="e"]{opacity:.3;filter:grayscale(1)}
+
+a.box.locked::before,a.box.free::before{position:absolute;top:-10px;right:-8px;font-size:12px;font-weight:600;padding:1px 7px;border-radius:999px;z-index:3;line-height:1.5}
+a.box.locked::before{content:"\1F512  Login";background:#FCEBEB;color:#791F1F;border:1px solid #F09595}
+a.box.free::before{content:"Free";background:#EAF3DE;color:#27500A;border:1px solid #97C459}
+
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.pcol{border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.pcol.e{background:#F6F5FE;border:1px solid #CECBF6}
+.pcol.c{background:#F2FAF7;border:1px solid #9FE1CB}
+.ptitle{align-self:flex-start;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#fff;padding:2px 10px;border-radius:999px}
+.ptitle.e{background:#534AB7}.ptitle.c{background:#0F6E56}
+.lk{background:#fff}
+.lk span,.lk small,.lk code{display:block}
+.lk small{font-size:12px;color:#5F5E5A;margin-top:3px}
+.lk code{margin-top:4px}
+.lk em{font-style:normal;font-size:12px;font-weight:600;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.bf{background:#EAF3DE;color:#27500A;border:1px solid #97C459}
+.bl{background:#FCEBEB;color:#791F1F;border:1px solid #F09595}
+
+/* larger text */
+.sub{font-size:17px}
+.hint{font-size:15px}
+.legend{font-size:15px;gap:14px}
+.hdr{font-size:16px}
+.box{font-size:20px}
+.full{font-size:16px}
+.mi{font-size:14px}.mi b{font-size:16px}
+.idxcap{font-size:14px}
+.note{font-size:16px}
+h2{font-size:22px}
+.lk b{font-size:17px}.lk span{font-size:15px}.lk small{font-size:13px}.lk code{font-size:14px}
+.ptitle,.bandlbl{font-size:13px}
+a.lnk[data-site]::after{font-size:13px}
+</style></head><body><div class="scroll"><div id="sizer"><div class="wrap">
+<h1>Where journal metrics come from</h1>
+<div class="sub">Scopus (Elsevier) vs. Web of Science (Clarivate)</div>
+<div class="hint">Tip: hover over a box to highlight its path, and click to open the website where you can check it.</div>
+<div class="legend"><span><i style="background:#534AB7"></i>Elsevier / Scopus path</span><span><i style="background:#0F6E56"></i>Clarivate / WoS path</span><span><i style="background:#FAC775;border:1.5px solid #EF9F27"></i>Metric (score)</span><span><i style="background:#D85A30"></i>Quartile (rank)</span><span><b style="font-size:12px;background:#EAF3DE;color:#27500A;border:1px solid #97C459;border-radius:999px;padding:0 7px">Free</b>anyone can open</span><span><b style="font-size:12px;background:#FCEBEB;color:#791F1F;border:1px solid #F09595;border-radius:999px;padding:0 7px">&#x1F512; Login</b>needs university access</span></div>
+<div class="grid" id="grid">
+ <div class="hdr">Company</div><div class="hdr">Database</div><div class="hdr">Index</div><div class="hdr">Published by</div><div class="hdr">Metric</div><div class="hdr">Quartile</div>
+
+ <div class="cell"><div class="box p" id="els">Elsevier</div></div>
+ <div class="cell"><a class="box p lnk free" id="sco" href="https://www.scopus.com/sources" data-site="scopus.com/sources" target="_blank" rel="noopener">Scopus</a></div>
+ <div class="cell"></div>
+ <div class="cell"><a class="box p lnk free" id="scim" href="https://www.scimagojr.com" data-site="scimagojr.com" target="_blank" rel="noopener">SCImago</a><div class="full">SCImago Lab<br>(research group)</div></div>
+ <div class="cell"><a class="box m lnk free" id="sjr" href="https://www.scimagojr.com" data-site="scimagojr.com" target="_blank" rel="noopener">SJR</a><div class="full">SCImago Journal Rank</div></div>
+ <div class="cell"><a class="box q lnk free" id="q1" href="https://www.scimagojr.com" data-site="scimagojr.com" target="_blank" rel="noopener">Q1–Q4</a><div class="full">Quartile 1–4</div></div>
+
+ <div style="grid-column:1/5;height:52px;margin-top:62px"></div>
+ <div class="cell" style="margin-top:62px"><a class="box m lnk free" id="cite" href="https://www.scopus.com/sources" data-site="scopus.com/sources" target="_blank" rel="noopener">CiteScore</a><div class="full">Published by Scopus</div></div>
+ <div style="margin-top:62px"></div>
+
+ <div class="sep" style="margin-top:56px"></div>
+
+ <div class="cell"><div class="box t" id="cla">Clarivate</div></div>
+ <div class="cell"><a class="box t lnk locked" id="wos" href="https://www.webofscience.com" data-site="webofscience.com" target="_blank" rel="noopener">WoS</a><div class="full">Web of Science</div></div>
+ <div class="cell">
+  <div class="idx" id="idx">
+   <a class="mi on lnk" href="https://mjl.clarivate.com" data-site="mjl.clarivate.com" target="_blank" rel="noopener"><b>SCIE</b>Sciences</a>
+   <a class="mi lnk" href="https://mjl.clarivate.com" data-site="mjl.clarivate.com" target="_blank" rel="noopener"><b>SSCI</b>Social sciences</a>
+   <a class="mi lnk" href="https://mjl.clarivate.com" data-site="mjl.clarivate.com" target="_blank" rel="noopener"><b>AHCI</b>Arts &amp; humanities</a>
+   <a class="mi lnk" href="https://mjl.clarivate.com" data-site="mjl.clarivate.com" target="_blank" rel="noopener"><b>ESCI</b>Emerging journals</a>
+  </div>
+  <div class="idxcap">Parts of WoS</div>
+ </div>
+ <div class="cell"><a class="box t lnk locked" id="jcr" href="https://jcr.clarivate.com" data-site="jcr.clarivate.com" target="_blank" rel="noopener">JCR</a><div class="full">Journal Citation<br>Reports</div></div>
+ <div class="cell"><a class="box m lnk locked" id="if" href="https://jcr.clarivate.com" data-site="jcr.clarivate.com" target="_blank" rel="noopener">IF</a><div class="full">Impact Factor</div></div>
+ <div class="cell"><a class="box q lnk locked" id="q2" href="https://jcr.clarivate.com" data-site="jcr.clarivate.com" target="_blank" rel="noopener">Q1–Q4</a><div class="full">Quartile 1–4</div></div>
+</div>
+<div class="note">
+<b>Full forms:</b> SCIE = Science Citation Index Expanded · SSCI = Social Sciences Citation Index · AHCI = Arts &amp; Humanities Citation Index · ESCI = Emerging Sources Citation Index
+</div>
+
+<h2>Check a journal</h2>
+<div class="paths">
+ <div class="pcol e">
+  <div class="ptitle e">Scopus path</div>
+  <a class="lk e" href="https://www.scimagojr.com" target="_blank" rel="noopener"><b>SCImago Journal &amp; Country Rank <em class="bf">Free</em></b><span>SJR, SCImago quartile (Q1–Q4), H-index.</span><code>scimagojr.com</code></a>
+  <a class="lk e" href="https://www.scopus.com/sources" target="_blank" rel="noopener"><b>Scopus Sources <em class="bf">Free</em></b><span>Is it Scopus indexed? CiteScore, SNIP, SJR.</span><code>scopus.com/sources</code></a>
+ </div>
+ <div class="pcol c">
+  <div class="ptitle c">Web of Science path</div>
+  <a class="lk c" href="https://mjl.clarivate.com" target="_blank" rel="noopener"><b>Clarivate Master Journal List <em class="bf">Free</em></b><span>Is it in WoS? Which index: SCIE, SSCI, AHCI or ESCI.</span><code>mjl.clarivate.com</code></a>
+  <a class="lk c" href="https://jcr.clarivate.com" target="_blank" rel="noopener"><b>Journal Citation Reports (JCR) <em class="bl">&#x1F512; Login</em></b><span>Impact Factor, JCR quartile (Q1–Q4).</span><small>No access? The journal&#39;s own homepage often lists its IF and JCR quartile.</small><code>jcr.clarivate.com</code></a>
+  <a class="lk c" href="https://www.webofscience.com" target="_blank" rel="noopener"><b>Web of Science <em class="bl">&#x1F512; Login</em></b><span>Search articles and citations.</span><code>webofscience.com</code></a>
+ </div>
+</div>
+</div></div></div>
+<script>
+const G=document.getElementById('grid'),g=G.getBoundingClientRect();
+const R=id=>{const r=document.getElementById(id).getBoundingClientRect();return{l:r.left-g.left,r:r.right-g.left,t:r.top-g.top,b:r.bottom-g.top,cx:r.left+r.width/2-g.left,cy:r.top+r.height/2-g.top}};
+let d='';
+const seg=(p,x,y,row)=>{d+=`<g class="ar ${row}"><path class="l" d="${p}" stroke-width="2" fill="none"/><path class="h" d="M${x-9} ${y-6} L${x} ${y} L${x-9} ${y+6} Z"/></g>`;};
+function hy(a,b,y,row){const A=R(a),B=R(b);seg(`M${A.r+4} ${y} L${B.l-10} ${y}`,B.l-2,y,row);}
+function h(a,b,row){hy(a,b,R(a).cy,row);}
+h('els','sco','e');h('sco','scim','e');h('scim','sjr','e');h('sjr','q1','e');
+{const A=R('sco'),B=R('cite');seg(`M${A.cx} ${A.b+4} L${A.cx} ${B.cy} L${B.l-10} ${B.cy}`,B.l-2,B.cy,'e');}
+const yy=R('wos').cy;h('cla','wos','c');hy('wos','idx',yy,'c');hy('idx','jcr',yy,'c');h('jcr','if','c');h('if','q2','c');
+const sv=document.createElementNS('http://www.w3.org/2000/svg','svg');
+sv.setAttribute('style','position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none');
+sv.innerHTML=d;G.appendChild(sv);
+const rows={e:['els','sco','scim','sjr','q1','cite'],c:['cla','wos','idx','jcr','if','q2']};
+for(const [row,ids] of Object.entries(rows)){for(const id of ids){const cell=document.getElementById(id).closest('.cell');cell.dataset.row=row;
+ cell.addEventListener('mouseenter',()=>G.classList.add('hl-'+row));cell.addEventListener('mouseleave',()=>G.classList.remove('hl-'+row));}}
+
+const band=(ids,row,label)=>{let L=1e9,T=1e9,Rr=-1e9,B=-1e9;for(const id of ids){const el=document.getElementById(id).closest('.cell');const r=el.getBoundingClientRect();const fl=el.querySelector('.full,.idxcap');const rb=fl?Math.max(r.bottom,fl.getBoundingClientRect().bottom):r.bottom;L=Math.min(L,r.left-g.left);T=Math.min(T,r.top-g.top);Rr=Math.max(Rr,r.right-g.left);B=Math.max(B,rb-g.top);}
+ const b=document.createElement('div');b.className='band '+row;Object.assign(b.style,{left:(L-14)+'px',top:(T-24)+'px',width:(Rr-L+28)+'px',height:(B-T+38)+'px'});G.prepend(b);
+ const t=document.createElement('div');t.className='bandlbl '+row;t.textContent=label;Object.assign(t.style,{left:(L)+'px',top:(T-35)+'px'});G.appendChild(t);};
+band(rows.e,'e','SCOPUS PATH');band(rows.c,'c','WEB OF SCIENCE PATH');
+document.querySelectorAll('.cell').forEach((c,i)=>c.style.animationDelay=(i*60)+'ms');
+document.querySelectorAll('.idx .mi').forEach((c,i)=>c.style.animationDelay=(500+i*80)+'ms');
+
+function fit(){const w=document.querySelector('.wrap'),z=document.getElementById('sizer');
+ const W=w.offsetWidth,H=w.offsetHeight,sc=Math.max(0.55,Math.min(1,document.documentElement.clientWidth/W));
+ w.style.transformOrigin='0 0';w.style.transform=sc<1?`scale(${sc})`:'';z.style.width=(W*sc)+'px';z.style.height=(H*sc)+'px';}
+fit();addEventListener('resize',fit);
+</script></body></html>
